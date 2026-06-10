@@ -5,190 +5,227 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Курьеры едут «в минус», а агрегаторы штрафуют: как Суши Мастер автоматизировал геозоны и защитил прибыль сети</title>
     <style>
-        /* Перенос дизайн-системы из шаблона Content3 */
+        /* Полная интеграция дизайн-системы Smart-Lab */
         :root {
-            --color-bg: #fafafa;
-            --color-text-main: #1a1a1a;
-            --color-text-muted: #666666;
-            --color-accent: #ff4500; /* Насыщенный операционный оранжевый Суши Мастер */
-            --color-card-bg: #ffffff;
-            --color-border: #e5e5e5;
-            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --bg-color: #111111;
+            --text-color: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-color: #ff4500; /* Операционный оранжевый */
+            --card-bg: #1a1a1a;
+            --border-color: #2a2a2a;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--color-bg);
-            color: var(--color-text-main);
-            line-height: 1.6;
+            font-family: var(--font-stack);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.625;
             margin: 0;
             padding: 0;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Контейнер лонгрида */
         .container {
             max-width: 760px;
             margin: 0 auto;
-            padding: 80px 24px;
+            padding: 100px 24px;
         }
 
-        /* Шапка статьи */
-        .header-meta {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--color-accent);
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .category-tag {
-            display: inline-block;
-            background: #f0f0f0;
-            color: #333;
-            padding: 4px 10px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 600;
-            margin-bottom: 24px;
-            border-radius: 2px;
-        }
-
-        h1 {
-            font-size: 2.85rem;
-            line-height: 1.15;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            margin: 0 0 24px 0;
-            color: #000;
-        }
-
-        .subtitle {
-            font-size: 1.25rem;
-            line-height: 1.5;
-            color: var(--color-text-muted);
-            margin-bottom: 40px;
-            font-weight: 400;
-        }
-
-        /* Бизнес-контекст */
-        .business-context {
-            font-size: 1.15rem;
-            line-height: 1.65;
+        /* Верхние теги и категории */
+        .brand-logo {
+            max-width: 140px;
+            height: auto;
             margin-bottom: 32px;
         }
 
-        .business-context strong {
-            font-weight: 600;
-            color: #000;
-        }
-
-        /* Разделители и счетчики секций в стиле швейцарского минимализма */
-        .section-counter {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--color-text-muted);
-            letter-spacing: 0.05em;
-            margin-top: 70px;
-            margin-bottom: 8px;
-            border-top: 1px solid var(--color-border);
-            padding-top: 24px;
-        }
-
-        h2 {
-            font-size: 1.95rem;
-            line-height: 1.2;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin: 0 0 24px 0;
-            color: #000;
-        }
-
-        p {
-            font-size: 1.05rem;
-            color: #2c2c2c;
-            margin: 0 0 20px 0;
-        }
-
-        /* Выносная цитата / Главный инсайт */
-        .insight-box {
-            background-color: var(--color-card-bg);
-            border-left: 3px solid var(--color-accent);
-            padding: 24px 32px;
-            margin: 32px 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-        }
-
-        .insight-box p {
-            font-size: 1.1rem;
-            font-style: italic;
-            color: #111;
-            margin: 0;
-        }
-
-        /* Блоки проблем и элементов ИТ-системы */
-        .problem-item {
-            margin-bottom: 24px;
-            padding-left: 16px;
-            border-left: 2px solid var(--color-border);
-        }
-
-        .problem-item strong {
-            display: block;
-            font-size: 1.1rem;
-            color: #000;
-            margin-bottom: 4px;
-        }
-
-        /* Карточки элементов (Профит) */
-        .element-card {
-            background: var(--color-card-bg);
-            border: 1px solid var(--color-border);
-            padding: 28px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.01);
-        }
-
-        .element-label {
-            font-size: 0.8rem;
+        .meta-tag-upper {
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--color-text-muted);
-            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
             margin-bottom: 8px;
-        }
-
-        .element-card h3 {
-            font-size: 1.3rem;
-            margin: 0 0 12px 0;
-            font-weight: 700;
-            color: #000;
-        }
-
-        .highlight-line {
-            background-color: #fff3cd;
-            padding: 2px 4px;
             font-weight: 500;
         }
 
-        /* Подвал */
-        footer {
-            margin-top: 100px;
-            border-top: 1px solid var(--color-border);
-            padding-top: 30px;
+        .meta-tag-accent {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        /* Заголовки */
+        h1 {
+            font-size: 2.85rem;
+            line-height: 1.2;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 0 0 32px 0;
+            color: #ffffff;
+        }
+
+        h2 {
+            font-size: 1.85rem;
+            line-height: 1.25;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 0 0 24px 0;
+            color: #ffffff;
+        }
+
+        h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin: 0 0 16px 0;
+            color: #ffffff;
+        }
+
+        /* Текст и контекст */
+        p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin: 0 0 24px 0;
+        }
+
+        p strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .business-context-box {
+            margin-bottom: 48px;
+        }
+
+        .business-context-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        /* Цитаты (Выносные блоки) */
+        blockquote {
+            background-color: var(--card-bg);
+            border-left: 3px solid var(--accent-color);
+            padding: 24px 32px;
+            margin: 40px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        blockquote p {
+            font-size: 1.1rem;
+            color: #ffffff;
+            font-style: normal;
+            margin: 0;
+        }
+
+        /* Секционные разделители в стиле Smart-Lab */
+        .section-separator {
             font-size: 0.85rem;
-            color: var(--color-text-muted);
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            margin-top: 80px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .section-title-sub {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 28px;
+        }
+
+        /* Иконочные списки проблем */
+        .icon-list-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 32px;
+        }
+
+        .icon-container {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            margin-right: 20px;
+            margin-top: 4px;
+        }
+
+        .icon-container img {
+            width: 100%;
+            height: auto;
+            filter: invert(1); /* Адаптация иконок Tilda под темную тему */
+        }
+
+        .icon-text-wrapper strong {
+            display: block;
+            font-size: 1.15rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        /* Карточки элементов ИТ-решения */
+        .element-wrapper {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 36px;
+            margin-bottom: 28px;
+            border-radius: 8px;
+        }
+
+        .element-header {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .element-wrapper p {
+            margin-bottom: 0;
+        }
+
+        .element-wrapper p strong {
+            color: #ffffff;
+        }
+
+        /* Финал */
+        .final-wish {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-top: 60px;
             text-align: center;
+        }
+
+        footer {
+            margin-top: 120px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 40px;
+            font-size: 0.8rem;
+            color: #555555;
+            line-height: 1.5;
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
         }
 
         @media (max-width: 600px) {
             h1 { font-size: 2.1rem; }
-            h2 { font-size: 1.6rem; }
-            .container { padding: 40px 16px; }
-            .insight-box { padding: 16px 20px; }
+            h2 { font-size: 1.5rem; }
+            .container { padding: 50px 16px; }
+            .element-wrapper { padding: 24px; }
+            .icon-list-item { flex-direction: column; }
+            .icon-container { margin-bottom: 12px; }
         }
     </style>
 </head>
@@ -196,64 +233,114 @@
 
     <div class="container">
         
-        <div class="header-meta">ИТ-Архитектура & Логистика</div>
-        <div class="category-tag">Автоматизация & Operations</div>
+        <img src="https://static.tildacdn.com/tild3336-3331-4038-b832-363137363138/logo.png" alt="Суши Мастер" class="brand-logo">
+
+        <div class="meta-tag-upper">Маркетингово-операционный кейс</div>
+        <div class="meta-tag-accent">Автоматизация геозон & Operations</div>
         
         <h1>Курьеры едут «в минус», а агрегаторы штрафуют: как Суши Мастер автоматизировал геозоны и защитил прибыль сети</h1>
         
-        <div class="subtitle">Как сквозная интеграция логистических полигонов ERP-системы Jetti с внешними площадками спасает рестораны от жесткого рассинхрона данных.</div>
-
-        <div class="business-context">
+        <div class="business-context-box">
+            <div class="business-context-title">Бизнес-контекст</div>
             <p>Эффективность современной службы доставки еды во многом зависит от точности управления радиусами и зонами доставки. В условиях, когда бренд представлен в десятках городов и на нескольких внешних платформах-агрегаторах, ручное администрирование этих данных неизбежно становится узким горлышком для бизнеса.</p>
             
             <p>Любое стратегическое или плановое изменение логистических контуров — будь то расширение зоны покрытия, открытие новой точки, изменение тарифов или временное сужение радиуса из-за дефицита курьеров — требует <strong>мгновенного отражения на всех витринах</strong>.</p>
             
-            <p>В классической модели управляющим и менеджерам приходится вручную переносить изменения в личные кабинеты каждой платформы (Яндекс Еда, Деливери Клаб, Чиббис). На стыке этого процесса возникает системный рассинхрон, который напрямую бьет по экономике ресторанов.</p>
+            <p>Пока конкуренты слепо надеются на ручной перенос данных в личные кабинеты агрегаторов и теряют маржинальность из-за технических задержек, мы в Суши Мастер решили автоматизировать логистические контуры и исключить системный рассинхрон, который бьет по экономике ресторанов.</p>
         </div>
 
-        <div class="insight-box">
-            <p>Команда ИТ-департамента управляющей компании Суши Мастер автоматизировала этот процесс, связав внутреннюю ERP-систему Jetti напрямую с API ключевых агрегаторов.</p>
-        </div>
+        <blockquote>
+            <p>Команда ИТ-департамента управляющей компании Суши Мастер автоматизировала этот процесс, связав внутреннюю ERP-систему Jetti напрямую с API ключевых агрегаторов (Яндекс Еда, Деливери Клаб, Чиббис).</p>
+        </blockquote>
 
-        <div class="section-counter">01 // Вызовы рынка</div>
-        <h2>Проблема: Цена ручной настройки и скрытые операционные убытки</h2>
+        <div class="section-separator">01 // Вызовы рынка</div>
+        <h2>Проблема</h2>
+        <div class="section-title-sub">Цена ручной настройки и скрытые операционные убытки</div>
         
-        <p>Попытки управлять зонами доставки «в ручном режиме» на нескольких независимых платформах одновременно приводят к трем критическим бизнес-рискам:</p>
+        <p>Попытки управлять зонами настройки «в ручном режиме» одновременно на нескольких независимых платформах приводят к трем критическим угрозам:</p>
 
-        <div class="problem-item">
-            <strong>Технологический рассинхрон</strong>
-            <p>Если на официальном сайте бренда зона доставки уже скорректирована, а на стороне одного из агрегаторов обновить данные забыли, система пропустит заказ на недоступный или нерентабельный адрес.</p>
+        <div class="icon-list-item">
+            <div class="icon-container">
+                <img src="https://static.tildacdn.com/lib/icons/tilda/wi-fi_wifi_network_internet.svg" alt="Рассинхрон">
+            </div>
+            <div class="icon-text-wrapper">
+                <strong>Технологический рассинхрон:</strong>
+                <p>Если на официальном сайте бренда зона доставки уже скорректирована, а на стороне одного из агрегаторов обновить данные забыли, система пропустит заказ на недоступный или нерентабельный адрес.</p>
+            </div>
         </div>
 
-        <div class="problem-item">
-            <strong>Штрафы и блокировки со стороны агрегаторов</strong>
-            <p>Когда ресторан вынужден отменять некорректно принятый агрегатором заказ, алгоритмы внешних платформ пессимизируют карточку заведения. Частые отмены и срывы времени доставки ведут к падению рейтинга, снижению видимости в приложении, а в худшем случае — к долгосрочной блокировке ресторана.</p>
+        <div class="icon-list-item">
+            <div class="icon-container">
+                <img src="https://static.tildacdn.com/lib/icons/tilda/phone_contact_call_ring.svg" alt="Штрафы">
+            </div>
+            <div class="icon-text-wrapper">
+                <strong>Штрафы и блокировки со стороны агрегаторов:</strong>
+                <p>Когда ресторан вынужден отменять некорректно принятый агрегатором заказ, алгоритмы внешних платформ пессимизируют карточку заведения. Частые отмены ведут к падению рейтинга и снижению видимости в приложении.</p>
+            </div>
         </div>
 
-        <div class="problem-item">
-            <strong>Падение маржинальности</strong>
-            <p>Доставка заказов в удаленные или перегруженные трафиком районы без учета актуальных операционных мощностей точки быстро превращает прибыльный чек в убыточный из-за переплаты за курьерский транзит.</p>
+        <div class="icon-list-item">
+            <div class="icon-container">
+                <img src="https://static.tildacdn.com/lib/icons/tilda/app_food_delivery.svg" alt="Маржинальность">
+            </div>
+            <div class="icon-text-wrapper">
+                <strong>Падение маржинальности:</strong>
+                <p>Доставка заказов в удаленные или перегруженные трафиком районы без учета актуальных мощностей точки быстро превращает прибыльный чек в убыточный из-за переплаты за курьерский транзит.</p>
+            </div>
         </div>
 
-        <div class="section-counter">02 // Автоматизация процессов</div>
-        <h2>Решение: Автоматическая выгрузка геозон по принципу «Одного окна»</h2>
+        <div class="section-separator">02 // Интеграция систем</div>
+        <h2>Решение</h2>
+        <div class="section-title-sub">Разворачиваем автоматическое ядро: выгрузка геозон по принципу «Одного окна»</div>
         
         <p>Внедренное ИТ-решение исключило необходимость ручного дублирования настроек. Логистическое ядро ERP-системы Jetti было напрямую интегрировано с сервисами Яндекс Еда, Деливери Клаб и Чиббис.</p>
         
-        <p>Теперь управление всеми логистическими полигонами происходит в едином интерфейсе. Как только менеджер вносит плановые изменения в Jetti, система автоматически и без участия человека обновляет геозоны на всех внешних площадках. На сегодняшний день автоматическая выгрузка <span class="highlight-line">успешно развернута и стабильно работает на всех розничных точках сети</span>.</p>
+        <p>Теперь управление всеми логистическими полигонами происходит в едином интерфейсе. Как только менеджер вносит плановые изменения в Jetti, система автоматически обновляет геозоны на всех внешних площадках. На сегодняшний день автоматическая выгрузка <strong>успешно развернута и стабильно работает на всех розничных точках сети</strong>.</p>
 
-        <div class="section-counter">03 // Экономический эффект</div>
+        <div class="section-separator">03 // Экономический результат</div>
         <h2>В чем чистый профит для бизнеса и франчайзи-партнеров?</h2>
-        
-        <p>Для наших партнеров этот релиз — не просто техническая строчка в отчете разработчиков, а вполне осязаемые деньги и безопасность бизнеса. Мы разложили профит на 4 ключевых элемента:</p>
+        <p>Ниже подробно разобраны 4 ключевых элемента ценности этого релиза для наших партнеров:</p>
 
-        <div class="element-card">
-            <div class="element-label">Элемент №1 // Безопасность</div>
+        <div class="element-wrapper">
+            <div class="element-header">Элемент №1 // Безопасность</div>
             <h3>Защита рейтинга и защита от блокировок</h3>
-            <p>Помните, как агрегаторы не любят отмены заказов и опоздания? Автоматизация геозон гарантирует: ресторан получает только те заказы, которые курьер железно успеет привезти вовремя. Никаких «левых» адресов, никаких обиженных гостей и никаких штрафных санкций от платформ.</p>
+            <p>Автоматизация геозон гарантирует: ресторан получает только те заказы, которые курьер железно успеет привезти вовремя. Никаких «левых» адресов и никаких штрафных санкций от платформ.</p>
         </div>
 
-        <div class="element-card">
-            <div class="element-label">Элемент №2 // Ресурсы</div>
+        <div class="element-wrapper">
+            <div class="element-header">Элемент №2 // Ресурсы</div>
             <h3>Экономия сотен часов рабочего времени</h3>
-            <p>Управляющие ресторанов освободились от рутин
+            <p>Управляющие ресторанов полностью освободились от рутинной технической работы. Вместо ручной перерисовки полигонов в трех админках они фокусируются на качестве сервиса и контроле кухни.</p>
+        </div>
+
+        <div class="element-wrapper">
+            <div class="element-header">Элемент №3 // Масштабирование</div>
+            <h3>Максимальный охват без рисков</h3>
+            <p>Новая зона доставки мгновенно раскатывается на все агрегаторы одним кликом. Сеть начинает сразу собирать максимум заказов с новых улиц, не теряя ни дня на ручные согласования.</p>
+        </div>
+
+        <div class="element-wrapper">
+            <div class="element-header">Элемент №4 // Точность</div>
+            <h3>Идеальная точность данных</h3>
+            <p>Полное отсутствие пересечений зон, путаницы между брендами на одном адресе и технологического хаоса. Все работает монолитно.</p>
+        </div>
+
+        <div class="section-separator">04 // Главный вывод</div>
+        <h2>Адаптируйся или теряй заказы</h2>
+        
+        <p>Пока конкуренты продолжают держать в штате сотрудников, чья единственная обязанность — следить за актуальностью адресов на разных сайтах, Суши Мастер превращает логистику в полностью автоматический процесс.</p>
+        
+        <p>Интеграция геозон доказала: современный фудтех — это не только про то, как вкусно сварить рис и красиво нарезать лосось. Это про то, как с помощью технологий автоматизировать рутину, сберечь нервы команде и заработать больше денег там, где остальные их теряют. Данные должны работать на бизнес, а не наоборот!</p>
+
+        <div class="final-wish">Всем отличных продаж, стабильного потока и высоких чеков! Всё получится!</div>
+
+        <footer>
+            © 2026 Управляющая Компания Суши Мастер. Все права защищены.<br>
+            Обращаем ваше внимание на то, что данный сайт, а также вся информация о ценах, носит исключительно информационный характер и не является публичной офертой, определяемой положениями Статьи 437 Гражданского кодекса РФ.<br>
+            Разработка и продвижение — <a href="https://zionagency.ru/" target="_blank">ZION Agency</a>
+        </footer>
+
+    </div>
+
+</body>
+</html>
